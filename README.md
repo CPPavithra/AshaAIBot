@@ -1,20 +1,54 @@
-STEPS-
 
-Set up the environment (Google Colab, Hugging Face, Python).
+---
 
-Collect, clean, and prepare the data for fine-tuning.
+## **Datasets Used in the Asha AI Chatbot Project**
 
-Choose and load a pre-trained NLP model (GPT-2 or BERT).
+### **Overview**
+The Asha AI Chatbot leverages multiple datasets to provide real-time job listings, mentorship opportunities, and personalized career recommendations. The data is sourced from publicly available job platforms, career databases, and diversity & inclusion reports, ensuring the chatbot provides relevant and accurate insights to users. Below are the datasets integrated into the system:
 
-Fine-tune the model on your specific domain data.
+---
 
-Evaluate the model and test with sample queries.
+### **1. Google Jobs Search API**
+- **Source**: [Google Jobs API](https://developers.google.com/jobs)
+- **Description**: The Google Jobs API allows the chatbot to search for real-time job listings based on user-provided queries. The API returns a variety of job information, including job titles, descriptions, company names, and job locations. The data is dynamically fetched based on user queries, allowing for personalized job recommendations across various industries.
 
-Deploy the model on a server or Hugging Face for API access.
+---
 
-Set up continuous learning based on user feedback.
+### **2. Indeed API**
+- **Source**: [Indeed API](https://www.indeed.com/publisher)
+- **Description**: The Indeed API provides access to real-time job listings across a wide range of industries and job titles. By integrating this API, the chatbot can pull relevant job postings and share them with users, along with additional details like job responsibilities, company information, and location.
 
-START WITH FRONTEND
+---
+
+### **3. LinkedIn Job Listings (1.3M LinkedIn Jobs & Skills Dataset)**
+- **Source**: [Kaggle: 1.3M LinkedIn Jobs & Skills Dataset](https://www.kaggle.com/datasets/1-3m-linkedin-jobs-skills)
+- **Description**: This dataset contains a collection of 1.3 million job listings from LinkedIn. It includes job titles, descriptions, skills required, and company details. This large dataset is used to supplement real-time job searches and provide a broader perspective on the job market.
+
+---
+
+### **4. PwC Diversity & Inclusion Dashboard**
+- **Source**: [PwC Diversity & Inclusion Dashboard](https://www.pwc.com/gx/en/services/consulting/diversity-and-inclusion.html) (Kaggle)
+- **Description**: This dataset includes insights and reports on diversity and inclusion efforts within various organizations. The data helps the chatbot promote gender equity and diversity by emphasizing companies that prioritize inclusivity, and it can be used to recommend jobs from companies that align with such values.
+
+---
+
+### **5. Resume Dataset (Livecareer)**
+- **Source**: [Livecareer Resume Dataset](https://www.livecareer.com/resumes)
+- **Description**: A collection of resumes from livecareer.com that provides examples of resumes in various fields. This dataset is used for resume parsing and job matching, helping the chatbot suggest job opportunities based on a user's resume or profile.
+
+---
+
+### **6. Lighcast-Open Skills API**
+- **Source**: [Lighcast-Open Skills API](https://www.lighcast.com/)
+- **Description**: The Lighcast Open Skills API provides detailed skillset data across various industries. It helps the chatbot recommend emerging skills based on the job search trends and provides suggestions on upskilling based on user preferences and job market trends.
+
+---
+
+### **Usage and Data Integration**
+- The datasets are used to train and fine-tune the model for better job matching and personalized career guidance. By leveraging both structured (CSV) and unstructured (API) data, the chatbot offers dynamic, real-time responses to users.
+- All external APIs are accessed during the chatbot's execution to provide the latest job listings, mentorship opportunities, and insights into the job market. This ensures that users receive the most up-to-date and relevant information.
+
+---
 
 
 asha-ai-chatbot/
