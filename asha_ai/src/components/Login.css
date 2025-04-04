@@ -1,0 +1,200 @@
+/* Login.css */
+
+.login-container {
+  width: 100%;
+  height: 100vh;
+  width: 50vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Status Bar */
+.status-bar {
+  height: 24px;
+  width: 100%;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  background-color: #9671db;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.time {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.status-icons {
+  display: flex;
+  gap: 6px;
+}
+
+.cellular-icon:after {
+  content: "•••";
+  font-size: 14px;
+}
+
+.wifi-icon:after {
+  content: "WiFi";
+  font-size: 14px;
+}
+
+.battery-icon:after {
+  content: "•";
+  font-size: 18px;
+}
+
+.logo-img {
+  width: 80px; /* Adjust the width as needed */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Remove any inline spacing */
+  margin: 0 auto; /* Center the image horizontally */
+  object-fit: cover; /* Crop/scale image to fit within the dimensions */ 
+  transition: transform 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.logo-img:hover {
+  transform: scale(1.1); /* Slightly enlarge the image on hover (optional) */
+}
+
+/* Purple Section */
+.purple-section-login {
+  background: linear-gradient(135deg, #9b7ede 0%, #7f5bd3 100%);
+  height: 30%;
+  min-height: 120px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
+}
+
+/* Header with Logo */
+.header {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  gap: 8px;
+}
+
+.logo-container {
+  width: 28px;
+  height: 28px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.robot-logo {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.app-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: white;
+}
+
+/* White Section */
+.white-section-login {
+  background-color: white;
+  flex: 1;
+  width: 100%;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  margin-top: -30px;
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #5b3fc0;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* Form styling */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 500;
+  font-size: 14px;
+  color: #333;
+}
+
+.form-group input {
+  height: 50px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 0 16px;
+  font-size: 16px;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #5b3fc0;
+}
+
+.forgot-password {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.forgot-password a {
+  color: #5b3fc0;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.login-button {
+  width: 100%;
+  height: 50px;
+  border-radius: 25px;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #5b3fc0;
+  color: white;
+  margin-top: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.redirect-signup {
+  margin-top: auto;
+  text-align: center;
+  font-size: 14px;
+  padding-top: 20px;
+}
+
+.redirect-signup a {
+  color: #5b3fc0;
+  text-decoration: none;
+  font-weight: 500;
+}
