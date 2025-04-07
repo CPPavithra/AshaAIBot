@@ -44,7 +44,6 @@ app.post('/signup', upload.fields([
       experience, skillset, email, password, recheck_password
     } = req.body;
 
-
     const hashedPassword = await bcrypt.hash(password, 10);
     const profilePic = req.files['profile_pic']?.[0]?.filename || null;
     const resume = req.files['resume']?.[0]?.filename || null;
@@ -67,8 +66,6 @@ app.post('/signup', upload.fields([
 app.post('/login', async (req, res) => {
   try {
     console.log('Login request received');
-
-    // Check if body is parsed correctly
     console.log('Request body:', req.body);
 
     const { email, password } = req.body;
@@ -101,6 +98,7 @@ app.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
+    // You should generate and send a token here for authentication in future requests
     res.json({ message: 'Login successful', user });
 
   } catch (err) {
@@ -124,9 +122,57 @@ app.get("/user", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+// ✅ ADD THIS PUT ROUTE FOR UPDATING USER DATA
+app.put("/user", async (req, res) => {
+  const { email } = req.query;
+  const updatedUserData = req.body;
+
+  try {
+    // Check if email is provided
+    if (!email) {
+      return res.status(400).json({ error: "Email parameter is required for updating." });
+    }
+
+    // Check if there's any data to update
+    if (Object.keys(updatedUserData).length === 0) {
+      return res.status(400).json({ error: "No update data provided." });
+    }
+
+    // Construct the update query dynamically
+    const updateFields = [];
+    const updateValues = [];
+
+    for (const key in updatedUserData) {
+      if (updatedUserData.hasOwnProperty(key) && key !== 'email' && key !== 'password') { // Prevent updating email and password here for simplicity, handle separately if needed
+        updateFields.push(`${key} = ?`);
+        updateValues.push(updatedUserData[key]);
+      }
+    }
+
+    if (updateFields.length === 0) {
+      return res.status(200).json({ message: "No fields to update." });
+    }
+
+    const query = `UPDATE users SET ${updateFields.join(', ')} WHERE email = ?`;
+    const values = [...updateValues, email];
+
+    const [result] = await db.execute(query, values);
+
+    if (result.affectedRows > 0) {
+      res.json({ message: "Profile updated successfully!" });
+    } else {
+      res.status(404).json({ error: "User not found or no changes applied." });
+    }
+
+  } catch (err) {
+    console.error("Error updating user:", err);
+    res.status(500).json({ error: "Failed to update profile." });
+  }
+});
+
 // Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);
 });
-
