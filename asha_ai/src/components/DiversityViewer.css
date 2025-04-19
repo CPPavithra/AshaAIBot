@@ -1,0 +1,198 @@
+/* Main theme colors */
+:root {
+  --primary: #7c3aed;
+  --primary-light: #9f67ff;
+  --primary-dark: #5b21b6;
+  --background: #f5f5fa;
+  --text: #333;
+  --light-purple: #ede9fe;
+  --white: #ffffff;
+  --gray: #e2e8f0;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container styling */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* Header styling */
+h2 {
+  color: var(--primary-dark);
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Form controls */
+.filter-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+select {
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--gray);
+  background-color: var(--white);
+  font-size: 0.9rem;
+  flex-grow: 1;
+  min-width: 200px;
+  appearance: menulist;
+  color: var(--text);
+}
+
+/* Button styling */
+button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  font-size: 0.9rem;
+}
+
+button:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Results section */
+.results {
+  background-color: var(--white);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.metric {
+  padding: 1rem;
+  background-color: var(--light-purple);
+  border-radius: 6px;
+}
+
+.metric p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.metric strong {
+  display: block;
+  font-size: 1.2rem;
+  margin-top: 0.25rem;
+  color: var(--primary-dark);
+}
+
+/* Chart container */
+.chart-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem 0;
+}
+
+/* Suggestions section */
+.suggestions {
+  margin-top: 2rem;
+}
+
+.suggestions h3 {
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+}
+
+.suggestions ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.suggestions li {
+  background-color: var(--light-purple);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+/* Navigation */
+.nav-bar {
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--white);
+  padding: 0.75rem 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.75rem;
+}
+
+.nav-item.active {
+  color: var(--primary);
+}
+
+.nav-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Welcome header (for homepage) */
+.welcome-header {
+  color: var(--primary);
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-subtext {
+  color: var(--primary-light);
+  margin-bottom: 2rem;
+}
+
+/* Page title with icon */
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .filter-controls {
+    flex-direction: column;
+  }
+  
+  select {
+    width: 100%;
+  }
+}
