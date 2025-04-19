@@ -8,6 +8,12 @@ import Chatbot from './components/Chatbot';
 import Dashboard from './components/Dashboard';
 import NavigationBar from './components/NavigationBar';
 import EditProfile from './components/EditProfile'; // Import EditProfile
+import Diversity from './components/DiversityViewer';
+import History from './components/Chathistory.js';
+import Newchatbot from './components/Chatwithhistory.js';
+import Newchat from './components/NewChat.js';
+import Job from './components/JobsPage.js';
+
 
 const ProtectedRoute = ({ children }) => {
   const authToken = localStorage.getItem('authToken');
@@ -37,7 +43,12 @@ function AppContent() {
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/edit-profile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} /> {/* Add the EditProfile route */}
           <Route path="/chatbot" element={<Chatbot />} />
-          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/diversity" element={<Diversity />} />
+         <Route path="/chat" element={<Newchatbot />} />
+         <Route path="/new" element={<Newchat />} />
+         <Route path="/history" element={<History userId="user123" />} />
+         <Route path="/jobs" element={<Job />} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
