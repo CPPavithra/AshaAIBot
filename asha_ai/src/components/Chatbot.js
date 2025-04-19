@@ -8,58 +8,44 @@ const Chatbot = () => {
     { sender: 'user', text: 'Show me what you can do' },
     {
       sender: 'bot',
-      text: `
-        <p>Of course! I can assist you with a wide range of tasks and answer questions on various topics. Here are some things I can do:</p>
-        <ul>
-          <li>Answer questions: Just ask me anything you like!</li>
-          <li>Generate text: I can write essays, articles, reports, stories, poems and more.</li>
-          <li>Conversation AI: I can engage in conversations with you in a natural and responsive manner.</li>
-        </ul>
-      `
+      text: `Of course! I can assist you with a wide range of tasks and answer questions on various topics.\n\n- Answer questions\n- Generate text like articles or essays\n- Chat like a human assistant`
     }
   ]);
   const [input, setInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [messages, isTyping]);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     const userText = input.trim();
     if (!userText) return;
 
     setMessages(prev => [...prev, { sender: 'user', text: userText }]);
     setInput('');
+    setIsTyping(true);
 
-    setTimeout(() => {
-      handleBotResponse(userText);
-    }, 500);
-  };
+    try {
+      const res = await fetch("http://localhost:5000/ai-response", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userText }),
+      });
 
-  const handleBotResponse = (userText) => {
-    const msg = userText.toLowerCase();
-    let botMessage;
+      const data = await res.json();
+      const finalText = `${data.source === "Flan-T5" ? "🧠" : "🌐"} ${data.source} says:\n${data.response}`;
 
-    if (
-      msg.includes('what you can do') ||
-      msg.includes('help') ||
-      msg === 'hi' ||
-      msg === 'hello'
-    ) {
-      botMessage = `
-        <p>Of course! I can assist you with a wide range of tasks and answer questions on various topics. Here are some things I can do:</p>
-        <ul>
-          <li>Answer questions: Just ask me anything you like!</li>
-          <li>Generate text: I can write essays, articles, reports, stories, poems and more.</li>
-          <li>Conversation AI: I can engage in conversations with you in a natural and responsive manner.</li>
-        </ul>
-      `;
-    } else {
-      botMessage = "<p>I'm your AI assistant. How can I help you today?</p>";
+      setMessages(prev => [...prev, { sender: 'bot', text: finalText }]);
+    } catch (err) {
+      setMessages(prev => [
+        ...prev,
+        { sender: 'bot', text: "⚠️ Error fetching response. Please try again later." }
+      ]);
+    } finally {
+      setIsTyping(false);
     }
-
-    setMessages(prev => [...prev, { sender: 'bot', text: botMessage }]);
   };
 
   const handleKeyDown = (e) => {
@@ -90,22 +76,31 @@ const Chatbot = () => {
           }
 
           const isUser = msg.sender === 'user';
-          const isBot = msg.sender === 'bot';
 
           return (
             <div
               key={idx}
               className={`message ${isUser ? 'user-message' : 'bot-message'}`}
             >
-              <div
-                className="message-bubble"
-                {...(isBot
-                  ? { dangerouslySetInnerHTML: { __html: msg.text } }
-                  : { children: msg.text })}
-              />
+              <div className="message-bubble">
+                {msg.text.split('\n').map((line, i) => (
+                  <p key={i}>{line}</p>
+                ))}
+              </div>
             </div>
           );
         })}
+
+        {/* Typing animation */}
+        {isTyping && (
+          <div className="message bot-message typing-indicator">
+            <div className="message-bubble">
+              <span className="dot"></span>
+              <span className="dot"></span>
+              <span className="dot"></span>
+            </div>
+          </div>
+        )}
         <div ref={messagesEndRef} />
       </div>
 

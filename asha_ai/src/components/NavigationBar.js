@@ -1,22 +1,51 @@
-import React from 'react';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import React, { useEffect, useState } from 'react';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { FaCommentDots, FaTachometerAlt, FaCogs, FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
+import axios from 'axios';
 import './NavigationBar.css';
 
 const NavigationBar = () => {
   const navigate = useNavigate();
-  const location = useLocation(); // Get the location object using the hook
-  const authToken = localStorage.getItem('authToken'); // Get the token
-  const userEmail = localStorage.getItem('userEmail'); // Get the email
+  const location = useLocation();
+
+  const authToken = localStorage.getItem('authToken');
+  const userEmail = localStorage.getItem('userEmail');
+
+  const queryParams = new URLSearchParams(location.search);
+  const email = queryParams.get("email");
+
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!email) {
+      setError("Email not found in URL.");
+      return;
+    }
+
+    axios
+      .get(`http://localhost:5000/user?email=${encodeURIComponent(email)}`)
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching user data:", err);
+        setError("Failed to load user data.");
+      });
+  }, [email]);
 
   const navigateToChatbot = () => {
+    navigate(`/chat?email=${encodeURIComponent(email)}`);
+  };
+
+  const navigateToFeatures = () => {
     navigate('/chatbot');
   };
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userEmail');
-    navigate('/'); // Or navigate to the login page, depending on your preference
+    navigate('/');
   };
 
   return (
@@ -25,8 +54,22 @@ const NavigationBar = () => {
         <li className="nav-item">
           <div
             onClick={navigateToChatbot}
-            className={`nav-link ${location.pathname === '/chatbot' ? 'active' : ''}`}
-            style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', color: '#663399', padding: '8px 10px', borderRadius: '15px' }}
+            className={`nav-link ${
+              location.pathname === '/chat' && location.search.includes(`email=${encodeURIComponent(email)}`)
+                ? 'active'
+                : ''
+            }`}
+            style={{
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textDecoration: 'none',
+              color: '#663399',
+              padding: '8px 10px',
+              borderRadius: '15px'
+            }}
           >
             <span className="nav-icon"><FaCommentDots /></span>
             <span className="nav-text">Chat</span>
@@ -35,7 +78,7 @@ const NavigationBar = () => {
         <li className="nav-item">
           <NavLink
             to={authToken && userEmail ? `/dashboard?email=${encodeURIComponent(userEmail)}` : '/login'}
-            activeClassName="active"
+            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
           >
             <span className="nav-icon"><FaTachometerAlt /></span>
             <span className="nav-text">Dashboard</span>
@@ -43,9 +86,19 @@ const NavigationBar = () => {
         </li>
         <li className="nav-item">
           <div
-            onClick={navigateToChatbot}
+            onClick={navigateToFeatures}
             className={`nav-link ${location.pathname === '/chatbot' ? 'active' : ''}`}
-            style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', color: '#663399', padding: '8px 10px', borderRadius: '15px' }}
+            style={{
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textDecoration: 'none',
+              color: '#663399',
+              padding: '8px 10px',
+              borderRadius: '15px'
+            }}
           >
             <span className="nav-icon"><FaCogs /></span>
             <span className="nav-text">Features</span>
@@ -54,7 +107,7 @@ const NavigationBar = () => {
         <li className="nav-item">
           <NavLink
             to={authToken && userEmail ? `/profile?email=${encodeURIComponent(userEmail)}` : '/login'}
-            activeClassName="active"
+            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
           >
             <span className="nav-icon"><FaUserCircle /></span>
             <span className="nav-text">Account</span>
@@ -65,7 +118,17 @@ const NavigationBar = () => {
             <div
               onClick={handleLogout}
               className="nav-link"
-              style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', color: '#663399', padding: '8px 10px', borderRadius: '15px' }}
+              style={{
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textDecoration: 'none',
+                color: '#663399',
+                padding: '8px 10px',
+                borderRadius: '15px'
+              }}
             >
               <span className="nav-icon"><FaSignOutAlt /></span>
               <span className="nav-text">Logout</span>
@@ -78,3 +141,4 @@ const NavigationBar = () => {
 };
 
 export default NavigationBar;
+

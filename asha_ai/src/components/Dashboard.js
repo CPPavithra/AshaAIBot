@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Link } from 'react-router-dom'; // Make sure this import is at the top
 import axios from "axios";
 import { FaUserCircle } from "react-icons/fa";
 import resumelogo from '../assets/resumelogo.png'
@@ -72,25 +73,35 @@ const Dashboard = ({ userEmail }) => {
         </div>
       </section>
 
-      <section className="new-updates">
-        <h4>New Updates ✨</h4>
-        <div className="features">
-          <div className="feature-box">
-            <h4>Match Resume <br/>with Jobs</h4>
-            <img src={resumelogo} alt="logo resume" className="logo-img" />
-          </div>
-          <div className="feature-box">
-            <h4>Career Path Recommender</h4>
-            <img src={career} alt="path recommender" className="logo-img" />
-          </div>
-          <div className="feature-box">
-            <h4>Diversity Score Viewer</h4>
-             <img src={pwc} alt="pwc" className="logo-img" />
-          </div>
-        </div>
-      </section>
-
-      <button className="sleek-button generate-chat" onClick={() => navigate("/chatbot")}>Chatbot</button>
+     
+<section className="new-updates">
+  <h4>New Updates ✨</h4>
+  <div className="features">
+    <div className="feature-box">
+      <h4>Match Resume <br />with Jobs</h4>
+      <img src={resumelogo} alt="logo resume" className="logo-img" />
+    </div>
+    <div className="feature-box">
+      <h4>Search with HerKey</h4>
+      <Link to="/jobs">
+      <img src={career} alt="path recommender" className="logo-img" />
+</Link>
+    </div>
+    <div className="feature-box">
+      <h4>Diversity Score Viewer</h4>
+      <Link to="/diversity">
+        <img src={pwc} alt="pwc" className="logo-img" style={{ cursor: "pointer" }} />
+      </Link>
+    </div>
+  </div>
+</section>
+    
+<button
+  className="sleek-button generate-chat"
+  onClick={() => navigate(`/chat?email=${encodeURIComponent(email)}`)}
+>
+  Chatbot
+</button>
 </div>
   );
 };
