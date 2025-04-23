@@ -18,7 +18,7 @@ const Chatbot = () => {
   
 useEffect(() => {
   if (email) {
-      fetch(`http://localhost:5000/chat-history?email=${encodeURIComponent(email)}`)
+      fetch(`https://ashaaibot-backend.onrender.com/chat-history?email=${encodeURIComponent(email)}`)
         .then(res => {
           if (!res.ok) {
             throw new Error(`HTTP error! Status: ${res.status}`);
@@ -60,7 +60,7 @@ useEffect(() => {
     setIsTyping(true);
 
     try {
-      const res = await fetch("http://localhost:5000/ai-response", {
+      const res = await fetch("https://ashaaibot-backend.onrender.com/ai-response", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userText, email }),

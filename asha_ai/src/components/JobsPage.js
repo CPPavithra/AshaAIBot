@@ -11,7 +11,7 @@ const JobsPage = () => {
   const fetchJobs = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:5000/api/search_jobs', {
+      const res = await axios.get('https://ashaaibot-backend.onrender.com/api/search_jobs', {
         params: { query, location }
       });
       setJobs(res.data);

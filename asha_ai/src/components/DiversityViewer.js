@@ -16,12 +16,12 @@ export default function DiversityViewer() {
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/filters').then(res => setFilters(res.data));
+    axios.get('https://ashaaibot-backend.onrender.com/filters').then(res => setFilters(res.data));
   }, []);
 
   useEffect(() => {
     if (selected.region && selected.jobLevel && selected.nationality) {
-      axios.get('http://localhost:5000/diversity-score', { params: selected })
+      axios.get('https://ashaaibot-backend.onrender.com/diversity-score', { params: selected })
         .then(res => {
           if (res.data) {
             setScore(res.data);
@@ -49,7 +49,7 @@ export default function DiversityViewer() {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/diversity-suggestions', {
+      const res = await axios.post('https://ashaaibot-backend.onrender.com/diversity-suggestions', {
         job_level: selected.jobLevel,
         nationality: selected.nationality
       });

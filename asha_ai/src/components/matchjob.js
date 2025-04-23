@@ -12,7 +12,7 @@ const MatchJob = () => {
     setLoading(true);
 console.log('Email:', email);
     try {
-      const response = await fetch('http://localhost:5000/matchjob', {
+      const response = await fetch('https://ashaaibot-backend.onrender.com/matchjob', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })

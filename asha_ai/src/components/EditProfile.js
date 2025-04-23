@@ -28,7 +28,7 @@ const EditProfile = () => {
     }
 
     axios
-      .get(`http://localhost:5000/user?email=${encodeURIComponent(email)}`)
+      .get(`https://ashaaibot-backend.onrender.com/user?email=${encodeURIComponent(email)}`)
       .then((response) => {
         setUser(response.data);
       })
@@ -53,7 +53,7 @@ const EditProfile = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/user?email=${encodeURIComponent(email)}`,
+        `https://ashaaibot-backend.onrender.com/user?email=${encodeURIComponent(email)}`,
         user
       );
 

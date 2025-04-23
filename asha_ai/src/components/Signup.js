@@ -59,7 +59,7 @@ function Signup() {
     if (resume) fullForm.append('resume', resume);
 
     try {
-      const response = await fetch('http://localhost:5000/signup', {
+      const response = await fetch('https://ashaaibot-backend.onrender.com/signup', {
         method: 'POST',
         body: fullForm
       });

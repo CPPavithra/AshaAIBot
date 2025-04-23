@@ -7,7 +7,7 @@ const ChatHistory = ({ userId }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/history/${userId}`)
+    fetch(`https://ashaaibot-backend.onrender.com/history/${userId}`)
       .then(res => res.json())
       .then(data => setChats(data))
       .catch(err => console.error('Failed to load history:', err));

@@ -25,7 +25,7 @@ const Dashboard = () => {
 
     // Fetch user data from the server using the email
     axios
-      .get(`http://localhost:5000/user?email=${encodeURIComponent(email)}`)
+      .get(`https://ashaaibot-backend.onrender.com/user?email=${encodeURIComponent(email)}`)
       .then((response) => {
         setUser(response.data);
       })
