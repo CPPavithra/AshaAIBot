@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app, origins=[
     "http://localhost:3000", 
     "https://asha-ai-bot-blue.vercel.app"
-])
+], supports_credentials=True)
 load_dotenv()
 
 # Replace with your actual SerpAPI key
