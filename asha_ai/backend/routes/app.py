@@ -11,6 +11,7 @@ load_dotenv()
 
 # Replace with your actual SerpAPI key
 SERP_API_KEY = os.getenv("SERP_API_KEY")
+print("Serp API Key:", SERP_API_KEY)
 
 def search_google_jobs(user_query, user_location):
     """
