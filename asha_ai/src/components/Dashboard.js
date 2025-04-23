@@ -45,10 +45,7 @@ const Dashboard = () => {
   }
 
   // Navigate to the chatbot with the query parameter
-  const handlePromptClick = (prompt) => {
-    navigate(`/chat?email=${encodeURIComponent(email)}&query=${encodeURIComponent(prompt)}`);
-};
-  return (
+   return (
     <div className="dashboard-container">
       {/* Profile icon - clicking redirects to profile page */}
       <div 
@@ -61,28 +58,11 @@ const Dashboard = () => {
       <h2 className="welcome-text">Welcome back, {user.name}</h2>
       <h3 className="chat-title">Smart AI Here! How can I help you?</h3>
 
-      {/* Trending prompts section */}
-      <section className="trending-section">
-        <h4>Trending Prompt</h4>
-        <div className="trending-prompts">
-          <button className="sleek-button" onClick={() => handlePromptClick("Artificial intelligence")}>
-            #1 Artificial intelligence
-          </button>
-          <button className="sleek-button" onClick={() => handlePromptClick("Data scientists")}>
-            #2 Data scientists
-          </button>
-          <button className="sleek-button" onClick={() => handlePromptClick("UX UI Design Road Map")}>
-            #3 UX UI Design Road Map
-          </button>
-          <button className="sleek-button" onClick={() => handlePromptClick("Healthy food lists")}>
-            #4 Software Engineering in Bangalore
-          </button>
-        </div>
-      </section>
-
+      {/* Trending prompts section */} 
       {/* New Updates Section */}
       <section className="new-updates">
-        <h4>New Updates ✨</h4>
+        <h4>Features We Offer</h4>
+        <h3>Ask your career related queries and we will guide you with anything and everything possible! </h3>
         <div className="features">
           <div className="feature-box">
             <h4>Match Resume <br />with Jobs</h4>
