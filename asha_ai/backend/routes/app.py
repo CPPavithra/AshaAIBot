@@ -6,7 +6,10 @@ from flask_cors import CORS
 import json
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app, origins=[
+    "http://localhost:3000", 
+    "https://asha-ai-bot-blue.vercel.app"
+])
 load_dotenv()
 
 # Replace with your actual SerpAPI key
