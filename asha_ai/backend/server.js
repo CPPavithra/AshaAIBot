@@ -33,6 +33,7 @@ const db = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+  port: process.env.DB_PORT || 3306,
 });
 
 module.exports = db;
@@ -478,7 +479,7 @@ try {
     }
 
     try {
-      const jobResults = await axios.get('http://localhost:5000/api/search_jobs', {
+      const jobResults = await axios.get('https://ashaaibot-backend.onrender.com/api/search_jobs', {
         params: { query, location },
       });
 
