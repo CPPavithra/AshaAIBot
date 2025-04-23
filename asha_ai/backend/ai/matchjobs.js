@@ -1,11 +1,12 @@
 // routes/matchjob.js
+require("dotenv").config();
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const db = require('../server'); // Update path if needed
 
 // Gemini API Key
-const GEMINI_API_KEY = 'AIzaSyD9iuKEeITxpZQZLfHFUqiLbZwGAh5mmNg'; // Replace this
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;// Replace this
 
 const createPrompt = (skillset, experience) => `
 I have ${experience} years of experience and the following skills: ${skillset}.

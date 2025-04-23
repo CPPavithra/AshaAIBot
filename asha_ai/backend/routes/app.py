@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from serpapi import GoogleSearch
 from flask_cors import CORS
@@ -5,9 +6,10 @@ import json
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
+load_dotenv()
 
 # Replace with your actual SerpAPI key
-SERP_API_KEY = "4e416c8febcb1c2a68d57622025263c30949ba9fec57ac7a782933d2dfd17981"
+SERP_API_KEY = os.getenv("SERP_API_KEY")
 
 def search_google_jobs(user_query, user_location):
     """
