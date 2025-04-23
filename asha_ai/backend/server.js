@@ -5,8 +5,10 @@ const multer = require('multer');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const path = require('path');
+const axios = require('axios');
 const jobsRoute = require('./routes/jobsRoute');
-const { smartResponse, geminiFallback } = require("./ai/smartresponse");
+const { smartResponse, geminiFallback, detectJobSearchIntent } = require("./ai/smartresponse");
+const matchjobRoutes = require("./ai/matchjobs");
 
 const app = express();
 app.use(cors());
@@ -16,6 +18,12 @@ app.use(express.urlencoded({ extended: true })); //for password parsing
 const fs = require('fs');
 const xlsx = require("xlsx");
 const bodyParser = require('body-parser');
+
+
+//app.use(cors(corsOptions));
+
+
+
 
 app.use(bodyParser.json());
 
@@ -27,6 +35,9 @@ const db = mysql.createPool({
   database: process.env.DB_NAME,
 });
 
+module.exports = db;
+//MATCH JOBS
+
 // Create or fetch session ID
 async function getOrCreateChatSession(email) {
   const [rows] = await db.query("SELECT id FROM chat_sessions WHERE user_email = ? ORDER BY created_at DESC LIMIT 1", [email]);
@@ -35,6 +46,24 @@ async function getOrCreateChatSession(email) {
   const [insertResult] = await db.query("INSERT INTO chat_sessions (user_email) VALUES (?)", [email]);
   return insertResult.insertId;
 }
+
+//const GEMINI_API_KEY = 'AIzaSyD9iuKEeITxpZQZLfHFUqiLbZwGAh5mmNg'; // Replace this
+
+const createPrompt = (skillset, experience) => `
+I have ${experience} years of experience and the following skills: ${skillset}.
+Suggest:
+1. Top 5 job roles I should apply for.
+2. Companies hiring for these roles.
+3. Freelancing or alternative paths.
+4. Recommended next skills.
+Respond in JSON format like this:
+{
+  "jobs": [{ "role": "Frontend Developer", "companies": ["Google", "Meta"] }],
+  "freelance": ["Build websites for small businesses"],
+  "next_skills": ["TypeScript", "Next.js"]
+}
+`;
+
 
 // Multer config
 const storage = multer.diskStorage({
@@ -418,64 +447,154 @@ app.get("/chat/:chatId", async (req, res) => {
 
 
 app.post("/ai-response", async (req, res) => {
-  const { message: userInput, email } = req.body;
+ const { message: userInput, email } = req.body;
 
-  if (!email || !userInput) {
-    return res.status(400).json({ error: "Email and message are required." });
-  }
+if (!email || !userInput) {
+  return res.status(400).json({ error: "Email and message are required." });
+}
 
-  try {
-    const sessionId = await getOrCreateChatSession(email);
+try {
+  const sessionId = await getOrCreateChatSession(email);
 
-    // Save user input to DB
-    await db.query(
-      "INSERT INTO user_memory (user_email, message, is_user, session_id) VALUES (?, ?, 1, ?)",
-      [email, userInput, sessionId]
-    );
+  // Save user message to history
+  await db.query(
+    "INSERT INTO user_memory (user_email, message, is_user, session_id) VALUES (?, ?, 1, ?)",
+    [email, userInput, sessionId]
+  );
 
-    // 👇 Fetch past messages for personalized prompting (limit to last N)
-    const [rows] = await db.query(
-      "SELECT message, is_user FROM user_memory WHERE user_email = ? AND session_id = ? ORDER BY id DESC LIMIT 10",
-      [email, sessionId]
-    );
+  // 👇 Detect if it's a job search intent
+  const jobIntent = await detectJobSearchIntent(userInput);
 
-    // 👇 Build prompt with context
-    const historyPrompt = rows
-      .reverse()
-      .map(row => (row.is_user ? `User: ${row.message}` : `AI: ${row.message}`))
-      .join("\n");
+  if (jobIntent?.isJobSearch) {
+    const { jobQuery: query, location } = jobIntent;
 
-    const fullPrompt = `${historyPrompt}\nUser: ${userInput}\nAI:`;
+    if (!query) {
+      const jobResponse = "❌ Please specify the type of job you're looking for.";
+      await db.query(
+        "INSERT INTO user_memory (user_email, message, is_user, session_id) VALUES (?, ?, 0, ?)",
+        [email, jobResponse, sessionId]
+      );
+      return res.json({ response: jobResponse });
+    }
 
-    // Try smartResponse with context
-    let aiResponse;
     try {
-      aiResponse = await smartResponse(fullPrompt);
-    } catch (err) {
-      console.warn("smartResponse failed:", err);
+      const jobResults = await axios.get('http://localhost:5000/api/search_jobs', {
+        params: { query, location },
+      });
+
+      if (!jobResults.data || jobResults.data.length === 0) {
+        const jobResponse = `🔍 No jobs found for "${query}" in "${location}". Try something else!`;
+        await db.query(
+          "INSERT INTO user_memory (user_email, message, is_user, session_id) VALUES (?, ?, 0, ?)",
+          [email, jobResponse, sessionId]
+        );
+        return res.json({ response: jobResponse });
+      }
+
+      const topJobs = jobResults.data.slice(0, 5).map((job) =>
+        `🔹 **${job.title}** at *${job.company}* in ${job.location}\n🔗 [Apply Here](${job.job_link})`
+      ).join("\n\n");
+
+      const jobResponse = `🎯 Top job results for "${query}" in "${location}":\n\n${topJobs}`;
+
+      await db.query(
+        "INSERT INTO user_memory (user_email, message, is_user, session_id) VALUES (?, ?, 0, ?)",
+        [email, jobResponse, sessionId]
+      );
+
+      return res.json({ response: jobResponse });
+    } catch (error) {
+      console.error("Job API error:", error.message);
+      const errorMessage = "🚨 Something went wrong while fetching job results. Please try again later.";
+      await db.query(
+        "INSERT INTO user_memory (user_email, message, is_user, session_id) VALUES (?, ?, 0, ?)",
+        [email, errorMessage, sessionId]
+      );
+      return res.json({ response: errorMessage });
     }
-
-    // Fallback if needed
-    if (!aiResponse) {
-      aiResponse = await geminiFallback(fullPrompt);
-    }
-
-    // Save AI response
-    await db.query(
-      "INSERT INTO user_memory (user_email, message, is_user, session_id) VALUES (?, ?, 0, ?)",
-      [email, aiResponse, sessionId]
-    );
-
-    return res.json({ source: "Gemini", response: aiResponse });
-  } catch (error) {
-    console.error("AI error:", error);
-    return res.status(500).json({ error: "Something went wrong." });
   }
+
+  // 🧠 Not a job intent → fallback to Gemini-style smart response
+  const [rows] = await db.query(
+    "SELECT message, is_user FROM user_memory WHERE user_email = ? AND session_id = ? ORDER BY id DESC LIMIT 10",
+    [email, sessionId]
+  );
+
+  const historyPrompt = rows
+    .reverse()
+    .map(row => (row.is_user ? `User: ${row.message}` : `AI: ${row.message}`))
+    .join("\n");
+
+  const fullPrompt = `${historyPrompt}\nUser: ${userInput}\nAI:`;
+
+  let aiResponse;
+  try {
+    aiResponse = await smartResponse(fullPrompt);
+  } catch (err) {
+    console.warn("smartResponse failed:", err);
+  }
+
+  if (!aiResponse) {
+    aiResponse = await geminiFallback(fullPrompt);
+  }
+
+  await db.query(
+    "INSERT INTO user_memory (user_email, message, is_user, session_id) VALUES (?, ?, 0, ?)",
+    [email, aiResponse, sessionId]
+  );
+
+  return res.json({ response: aiResponse });
+
+} catch (error) {
+  console.error("Final AI error:", error);
+  return res.status(500).json({ error: "Something went wrong." });
+}
 });
 
-//JOBS 
 app.use('/api', jobsRoute);
 
+//MATCH JOBS
+app.post('/matchjob', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Fetch user details from the database
+    const [userRows] = await db.execute('SELECT experience, skillset FROM users WHERE email = ?', [email]);
+    console.log('User Rows:', userRows);
+
+    if (userRows.length === 0) return res.status(404).json({ error: 'User not found' });
+
+    const { experience, skillset } = userRows[0];
+    
+    // Generate prompt for the AI model
+    const prompt = createPrompt(skillset, experience);
+
+    // Call external Gemini API to get job recommendations
+    const response = await axios.post(
+      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      {
+        contents: [{ parts: [{ text: prompt }] }]
+      },
+      { headers: { 'Content-Type': 'application/json' } }
+    );
+
+    
+const result = response.data.candidates[0].content.parts[0].text;
+
+// Try to extract the JSON array or object from the text using regex
+const match = result.match(/\[.*\]|\{.*\}/s);
+if (!match) {
+  return res.status(500).json({ error: 'Invalid JSON in Gemini response' });
+}
+
+const parsed = JSON.parse(match[0]); // Only parse the valid JSON part
+
+res.json({ recommendations: parsed });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to match job' });
+  }
+});
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);
