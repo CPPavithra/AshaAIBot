@@ -11,7 +11,14 @@ const { smartResponse, geminiFallback, detectJobSearchIntent } = require("./ai/s
 const matchjobRoutes = require("./ai/matchjobs");
 
 const app = express();
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:3000", // for dev
+  "https://asha-ai-bot-blue.vercel.app" // for deployed
+];
+
+app.use(cors({
+  origin: allowedOrigins
+}));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.urlencoded({ extended: true })); //for password parsing
