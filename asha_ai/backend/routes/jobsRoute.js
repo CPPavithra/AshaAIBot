@@ -6,7 +6,7 @@ const router = express.Router();
 async function searchJobs(userQuery, userLocation) {
   try {
     // Send GET request to Flask API with user inputs
-    const response = await axios.get('http://127.0.0.1:5001/search_jobs', {
+    const response = await axios.get('https://ashaaibot-python.onrender.com/search_jobs', {
       params: {
         query: userQuery,
         location: userLocation
