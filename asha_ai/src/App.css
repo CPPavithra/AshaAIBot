@@ -6,7 +6,20 @@
   height: 40vmin;
   pointer-events: none;
 }
+/* styles.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  padding: 1rem;
+}
 
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+}
+ 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

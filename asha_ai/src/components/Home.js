@@ -17,10 +17,9 @@ function Home() {
   return (
     <div className="app-container">
       <div className="status-bar">
-        <div className="time">8:15</div>
+        <div className="time"></div>
         <div className="status-icons">
           <div className="cellular-icon"></div>
-          <div className="wifi-icon"></div>
           <div className="battery-icon"></div>
         </div>
       </div>

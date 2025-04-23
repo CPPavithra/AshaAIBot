@@ -13,6 +13,7 @@ import History from './components/Chathistory.js';
 import Newchatbot from './components/Chatwithhistory.js';
 import Newchat from './components/NewChat.js';
 import Job from './components/JobsPage.js';
+import MatchJob from './components/matchjob.js';
 
 
 const ProtectedRoute = ({ children }) => {
@@ -48,6 +49,7 @@ function AppContent() {
          <Route path="/new" element={<Newchat />} />
          <Route path="/history" element={<History userId="user123" />} />
          <Route path="/jobs" element={<Job />} />
+         <Route path="/matchjob" element={<MatchJob />} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
