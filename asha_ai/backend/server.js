@@ -22,9 +22,6 @@ const bodyParser = require('body-parser');
 
 //app.use(cors(corsOptions));
 
-
-
-
 app.use(bodyParser.json());
 
 // MySQL connection
