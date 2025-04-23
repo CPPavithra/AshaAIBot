@@ -47,6 +47,13 @@ text-align: center;
   margin-bottom: 15px;
 }
 
+.new-updates h5 {
+  color: #663399;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+
 .trending-prompts {
   display: flex;
   justify-content: center;
@@ -94,7 +101,7 @@ text-align: center;
   padding: 10px;
   border-radius: 10px;
   text-align: center;
-  width: 33.3%;
+  width: 65px;
 }
 
 .feature-box h5 {

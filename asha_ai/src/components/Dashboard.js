@@ -62,7 +62,7 @@ const Dashboard = () => {
       {/* New Updates Section */}
       <section className="new-updates">
         <h4>Features We Offer</h4>
-        <h3>Ask your career related queries and we will guide you with anything and everything possible! </h3>
+        <h5>Ask your career related queries and we will guide you with anything and everything possible! </h5>
         <div className="features">
           <div className="feature-box">
             <h4>Match Resume <br />with Jobs</h4>
