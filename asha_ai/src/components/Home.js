@@ -42,9 +42,7 @@ function Home() {
           <h2 className="app-name">Asha AI - Fueling Women’s Success</h2>
           <p className="app-description">
 "Welcome to Asha! Your AI-powered career companion<br/>
-specially tailored for women. Explore job opportunities,<br/>
-connect with mentors,and unlock resources to empower<br/>
-your professional journey.<br/>"
+specially tailored for women. <br/>"
           </p>
   <h2 className="app-name">Ask Away!</h2>
         </div>

@@ -62,8 +62,8 @@
 
 /* Main Robot Image - Enlarged */
 .main-robot {
-  width: 450px;  /* Increased from 140px */
-  height: 450px; /* Made it square for better scaling */
+  width: 100%;  /* Increased from 140px */
+  height: 100%; /* Made it square for better scaling */
   margin: 30px 0;
   position: relative;
   z-index: 2;
@@ -93,7 +93,7 @@
 
 .app-info {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -102,8 +102,7 @@
   font-size: 24px;
   font-weight: 600;
   color: #5b3fc0;
-  text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 5px;
 }
 
 .app-description {
