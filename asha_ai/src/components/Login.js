@@ -35,7 +35,8 @@ function Login() {
       localStorage.setItem('authToken', data.token); // Assuming your backend sends a 'token'
       localStorage.setItem('userEmail', data.user.email); // Assuming your backend sends user data with email
 
-      navigate(`/dashboard?email=${encodeURIComponent(email)}`);
+      //navigate(`/dashboard?email=${encodeURIComponent(email)}`);
+      navigate(`/dashboard`);
 
     } catch (err) {
       console.error('Error during login:', err);
