@@ -14,7 +14,7 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
 
   // ✅ Retrieve email from localStorage
-  const email = localStorage.getItem("userEmail");
+ const email = localStorage.getItem('userEmail');
 
   // ✅ Logout function (defined outside useEffect)
   const handleLogout = () => {
@@ -30,7 +30,7 @@ const Dashboard = () => {
 
     // ✅ Fetch user data from server
     axios
-      .get(`https://ashaaibot-backend.onrender.com/user?email=${encodeURIComponent(email)}`)
+      .get(https://ashaaibot-backend.onrender.com/user?email=${encodeURIComponent(email)})
       .then((response) => {
         setUser(response.data);
       })
@@ -45,12 +45,17 @@ const Dashboard = () => {
     return <div className="error-message">{error}</div>;
   }
 
+  if (!user) {
+    return <div className="error-message">Loading...</div>;
+  } 
+
+// Navigate to the chatbot with the query parameter
    return (
     <div className="dashboard-container">
       {/* Profile icon - clicking redirects to profile page */}
       <div 
         className="profile-icon" 
-        onClick={() => navigate(`/profile?email=${encodeURIComponent(email)}`)}
+        onClick={() => navigate(/profile?email=${encodeURIComponent(email)})}
       >
         <FaUserCircle size={40} />
       </div>
@@ -66,21 +71,21 @@ const Dashboard = () => {
         <div className="features">
           <div className="feature-box">
             <h4>Match Resume <br />with Jobs</h4>
-            <Link to={`/matchjob?email=${encodeURIComponent(email)}`}>
+            <Link to={/matchjob?email=${encodeURIComponent(email)}}>
               <img src={resumelogo} alt="logo resume" className="logo-img" />
             </Link>
           </div>
 
           <div className="feature-box">
             <h4>Search with HerKey</h4>
-            <Link to={`/jobs?email=${encodeURIComponent(email)}`}>
+            <Link to={/jobs?email=${encodeURIComponent(email)}}>
               <img src={career} alt="path recommender" className="logo-img" />
             </Link>
           </div>
 
           <div className="feature-box">
             <h4>Diversity Score Viewer</h4>
-            <Link to={`/diversity?email=${encodeURIComponent(email)}`}>
+            <Link to={/diversity?email=${encodeURIComponent(email)}}>
               <img src={pwc} alt="pwc" className="logo-img" style={{ cursor: "pointer" }} />
             </Link>
           </div>
@@ -90,7 +95,7 @@ const Dashboard = () => {
       {/* Chatbot Button */}
       <button
         className="sleek-button generate-chat"
-        onClick={() => navigate(`/chat?email=${encodeURIComponent(email)}`)}
+        onClick={() => navigate(/chat?email=${encodeURIComponent(email)})}
       >
         Chatbot
       </button>
@@ -99,4 +104,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
