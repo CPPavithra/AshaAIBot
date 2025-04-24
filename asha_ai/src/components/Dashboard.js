@@ -15,7 +15,19 @@ const Dashboard = () => {
 
   // Retrieve email from the URL query parameters
   const queryParams = new URLSearchParams(location.search);
-  const email = queryParams.get("email");
+  //const email = queryParams.get("email");
+  const email = localStorage.getItem("userEmail");
+
+  useEffect(() => {
+    if (!email) {
+      setError("Email not found in local storage.");
+      return;
+    }
+   
+  const handleLogout = () => {
+  localStorage.removeItem("userEmail");
+  navigate("/login");
+  };
 
   useEffect(() => {
     if (!email) {
