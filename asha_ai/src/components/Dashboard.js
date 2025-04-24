@@ -13,29 +13,22 @@ const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
 
-  // Retrieve email from the URL query parameters
-  const queryParams = new URLSearchParams(location.search);
-  //const email = queryParams.get("email");
+  // ✅ Retrieve email from localStorage
   const email = localStorage.getItem("userEmail");
+
+  // ✅ Logout function (defined outside useEffect)
+  const handleLogout = () => {
+    localStorage.removeItem("userEmail");
+    navigate("/login");
+  };
 
   useEffect(() => {
     if (!email) {
       setError("Email not found in local storage.");
       return;
     }
-   
-  const handleLogout = () => {
-  localStorage.removeItem("userEmail");
-  navigate("/login");
-  };
 
-  useEffect(() => {
-    if (!email) {
-      setError("Email not found in URL.");
-      return;
-    }
-
-    // Fetch user data from the server using the email
+    // ✅ Fetch user data from server
     axios
       .get(`https://ashaaibot-backend.onrender.com/user?email=${encodeURIComponent(email)}`)
       .then((response) => {
@@ -47,16 +40,14 @@ const Dashboard = () => {
       });
   }, [email]);
 
-  // Handle the case when email is missing or user data is loading
+  // ✅ Handle loading or error
   if (error) {
     return <div className="error-message">{error}</div>;
   }
 
   if (!user) {
     return <div className="error-message">Loading...</div>;
-  }
-
-  // Navigate to the chatbot with the query parameter
+  }  // Navigate to the chatbot with the query parameter
    return (
     <div className="dashboard-container">
       {/* Profile icon - clicking redirects to profile page */}
