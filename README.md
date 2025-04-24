@@ -1,7 +1,4 @@
-
 ---
-
-```markdown
 # 💬 Asha AI Chatbot – Documentation
 
 ## 📘 Index
