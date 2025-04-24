@@ -61,7 +61,7 @@ const EditProfile = () => {
       if (response.status === 200) {
         setSuccessMessage("Profile updated successfully!");
         setTimeout(() => {
-          navigate(`/profile?email=${encodeURIComponent(email)}`);
+          navigate(`/profile`);
         }, 1500);
       } else {
         setError("Failed to update profile.");
@@ -73,7 +73,7 @@ const EditProfile = () => {
   };
 
   const handleCancel = () => {
-    navigate(`/profile?email=${encodeURIComponent(email)}`);
+    navigate(`/profile`);
   };
 
   return (

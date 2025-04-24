@@ -36,7 +36,7 @@ const NavigationBar = () => {
   }, [email]);
 
   const navigateToChatbot = () => {
-    navigate(`/chat?email=${encodeURIComponent(email)}`);
+    navigate(`/chat`);
   };
 
   const navigateToFeatures = () => {
@@ -78,7 +78,7 @@ const NavigationBar = () => {
         </li>
         <li className="nav-item">
           <NavLink
-            to={authToken && userEmail ? `/dashboard?email=${encodeURIComponent(userEmail)}` : '/login'}
+            to={authToken && userEmail ? `/dashboard` : '/login'}
             className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
           >
             <span className="nav-icon"><FaTachometerAlt /></span>
@@ -87,7 +87,7 @@ const NavigationBar = () => {
         </li>
                 <li className="nav-item">
           <NavLink
-            to={authToken && userEmail ? `/profile?email=${encodeURIComponent(userEmail)}` : '/login'}
+            to={authToken && userEmail ? `/profile` : '/login'}
             className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
           >
             <span className="nav-icon"><FaUserCircle /></span>

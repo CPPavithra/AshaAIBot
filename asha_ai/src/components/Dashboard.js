@@ -56,7 +56,7 @@ const Dashboard = () => {
       {/* Profile icon - clicking redirects to profile page */}
       <div 
         className="profile-icon" 
-        onClick={() => navigate(`/profile?email=${encodeURIComponent(email)}`)}
+        onClick={() => navigate(`/profile`)}
       >
         <FaUserCircle size={40} />
       </div>
@@ -72,21 +72,21 @@ const Dashboard = () => {
   <div className="features">
     <div className="feature-box">
       <h4>Match Resume <br />with Jobs</h4>
-      <Link to={`/matchjob?email=${encodeURIComponent(email)}`}>
+      <Link to={`/matchjob`}>
         <img src={resumelogo} alt="logo resume" className="logo-img" />
       </Link>
     </div>
 
     <div className="feature-box">
       <h4>Search with HerKey</h4>
-      <Link to={`/jobs?email=${encodeURIComponent(email)}`}>
+      <Link to={`/jobs`}>
         <img src={career} alt="path recommender" className="logo-img" />
       </Link>
     </div>
 
     <div className="feature-box">
       <h4>Diversity Score Viewer</h4>
-      <Link to={`/diversity?email=${encodeURIComponent(email)}`}>
+      <Link to={`/diversity`}>
         <img src={pwc} alt="pwc" className="logo-img" style={{ cursor: "pointer" }} />
       </Link>
     </div>  </div>
@@ -95,7 +95,7 @@ const Dashboard = () => {
 {/* Chatbot Button */}
 <button
   className="sleek-button generate-chat"
-  onClick={() => navigate(`/chat?email=${encodeURIComponent(email)}`)}
+  onClick={() => navigate(`/chat`)}
 >
   Chatbot
 </button>
