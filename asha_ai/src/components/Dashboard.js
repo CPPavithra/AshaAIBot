@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom"; 
+import { useNavigate, useLocation } from "react-router-dom"; 
 import axios from "axios";
-import { FaUserCircle } from "react-icons/fa";
-import resumelogo from '../assets/resumelogo.png';
-import career from '../assets/career.png';
-import pwc from '../assets/pwc.png';
-import "./Dashboard.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -14,7 +9,7 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
 
   // ✅ Retrieve email from localStorage
- const email = localStorage.getItem('userEmail');
+  const email = localStorage.getItem('userEmail');
 
   // ✅ Logout function (defined outside useEffect)
   const handleLogout = () => {
@@ -30,7 +25,7 @@ const Dashboard = () => {
 
     // ✅ Fetch user data from server
     axios
-      .get(https://ashaaibot-backend.onrender.com/user?email=${encodeURIComponent(email)})
+      .get(`https://ashaaibot-backend.onrender.com/user?email=${encodeURIComponent(email)}`)
       .then((response) => {
         setUser(response.data);
       })
@@ -47,10 +42,7 @@ const Dashboard = () => {
 
   if (!user) {
     return <div className="error-message">Loading...</div>;
-  } 
-
-// Navigate to the chatbot with the query parameter
-   return (
+  }   return (
     <div className="dashboard-container">
       {/* Profile icon - clicking redirects to profile page */}
       <div 
