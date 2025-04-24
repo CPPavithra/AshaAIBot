@@ -13,7 +13,7 @@ const matchjobRoutes = require("./ai/matchjobs");
 const app = express();
 const allowedOrigins = [
   "http://localhost:3000", // for dev
-  "https://asha-ai-bot-blue.vercel.app" // for deployed
+  "https://asha-ai-bot-blue.vercel.app" 
 ];
 
 app.use(cors({
@@ -117,25 +117,19 @@ app.post('/login', async (req, res) => {
   try {
     console.log('Login request received');
     console.log('Request body:', req.body);
-
     const { email, password } = req.body;
-
     if (!email || !password) {
       return res.status(400).json({ error: 'Email and password are required' });
     }
-
     const [rows] = await db.execute(
       'SELECT * FROM users WHERE email = ?',
       [email]
     );
-
     if (rows.length === 0) {
       console.log('No user found with email:', email);
       return res.status(401).json({ error: 'Invalid email or password' });
     }
-
     const user = rows[0];
-
     console.log('User found:', user.email);
     console.log('Entered password:', JSON.stringify(password));
     console.log('Stored hashed password:', user.password);
@@ -143,14 +137,10 @@ app.post('/login', async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
 
     console.log('Password match result:', match);
-
     if (!match) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
-
-    // You should generate and send a token here for authentication in future requests
-    res.json({ message: 'Login successful', user });
-
+       res.json({ message: 'Login successful', user });
   } catch (err) {
     console.error('Login error:', err);
     res.status(500).json({ error: 'Login failed' });

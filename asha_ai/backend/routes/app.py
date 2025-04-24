@@ -9,12 +9,12 @@ app = Flask(__name__)
 CORS(app, origins=[
     "http://localhost:3000", 
     "https://asha-ai-bot-blue.vercel.app"
+    "https://ashaaibot-backend.onrender.com"
 ], supports_credentials=True)
 load_dotenv()
 
 # Replace with your actual SerpAPI key
 SERP_API_KEY = os.getenv("SERP_API_KEY")
-print("Serp API Key:", SERP_API_KEY)
 
 def search_google_jobs(user_query, user_location):
     """
@@ -72,5 +72,6 @@ def search_jobs():
     return jsonify(job_results)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
- #the app on port 5001 for testing
+    port = int(os.environ.get('PORT', 5000))  # default to 5000 for local dev
+    app.run(host='0.0.0.0', port=port)
+#the app on port 5001 for testing
