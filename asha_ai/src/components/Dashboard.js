@@ -66,40 +66,39 @@ const Dashboard = () => {
 
       {/* Trending prompts section */} 
       {/* New Updates Section */}
-      <section className="new-updates">
-        <h4>Features We Offer</h4>
-        <h5>Ask your career related queries and we will guide you with anything and everything possible! </h5>
-        <div className="features">
-          <div className="feature-box">
-            <h4>Match Resume <br />with Jobs</h4>
-            <Link to={/matchjob?email=${encodeURIComponent(email)}}>
-              <img src={resumelogo} alt="logo resume" className="logo-img" />
-            </Link>
-          </div>
+     <section className="new-updates">
+  <h4>Features We Offer</h4>
+  <h5>Ask your career related queries and we will guide you with anything and everything possible! </h5>
+  <div className="features">
+    <div className="feature-box">
+      <h4>Match Resume <br />with Jobs</h4>
+      <Link to={`/matchjob?email=${encodeURIComponent(email)}`}>
+        <img src={resumelogo} alt="logo resume" className="logo-img" />
+      </Link>
+    </div>
 
-          <div className="feature-box">
-            <h4>Search with HerKey</h4>
-            <Link to={/jobs?email=${encodeURIComponent(email)}}>
-              <img src={career} alt="path recommender" className="logo-img" />
-            </Link>
-          </div>
+    <div className="feature-box">
+      <h4>Search with HerKey</h4>
+      <Link to={`/jobs?email=${encodeURIComponent(email)}`}>
+        <img src={career} alt="path recommender" className="logo-img" />
+      </Link>
+    </div>
 
-          <div className="feature-box">
-            <h4>Diversity Score Viewer</h4>
-            <Link to={/diversity?email=${encodeURIComponent(email)}}>
-              <img src={pwc} alt="pwc" className="logo-img" style={{ cursor: "pointer" }} />
-            </Link>
-          </div>
-        </div>
-      </section>
+    <div className="feature-box">
+      <h4>Diversity Score Viewer</h4>
+      <Link to={`/diversity?email=${encodeURIComponent(email)}`}>
+        <img src={pwc} alt="pwc" className="logo-img" style={{ cursor: "pointer" }} />
+      </Link>
+    </div>  </div>
+</section>
 
-      {/* Chatbot Button */}
-      <button
-        className="sleek-button generate-chat"
-        onClick={() => navigate(/chat?email=${encodeURIComponent(email)})}
-      >
-        Chatbot
-      </button>
+{/* Chatbot Button */}
+<button
+  className="sleek-button generate-chat"
+  onClick={() => navigate(`/chat?email=${encodeURIComponent(email)}`)}
+>
+  Chatbot
+</button>
     </div>
   );
 };
