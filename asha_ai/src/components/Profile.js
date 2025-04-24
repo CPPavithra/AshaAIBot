@@ -5,16 +5,15 @@ import { useLocation } from "react-router-dom";
 import "./Profile.css";
 
 const Profile = () => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const email = queryParams.get("email"); // ✅ Get email from URL
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const email = localStorage.getItem("userEmail");
+
     if (!email) {
-      setError("Email not found in URL.");
+      setError("Email not found in local storage.");
       return;
     }
 
@@ -27,7 +26,7 @@ const Profile = () => {
         console.error("Error fetching user data:", err);
         setError("Failed to load user data.");
       });
-  }, [email]);
+  }, []);
 
   if (error) {
     return <div className="error-message">{error}</div>;
@@ -35,9 +34,8 @@ const Profile = () => {
 
   if (!user) {
     return <div className="error-message">Loading...</div>;
-  }
-
-  return (
+  } 
+return (
     <div className="profile-container">
       <div className="profile-header">
         <h1 id="header-name">{user.name}</h1>

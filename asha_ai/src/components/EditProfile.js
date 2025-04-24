@@ -6,7 +6,8 @@ import "./EditProfile.css"; // Create this CSS file
 const EditProfile = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const email = queryParams.get("email");
+  //const email = queryParams.get("email");
+  const email = localStorage.getItem("userEmail");
   const navigate = useNavigate();
 
   const [user, setUser] = useState({

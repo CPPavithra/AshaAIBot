@@ -13,7 +13,7 @@ const Chatbot = () => {
  const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 
-  const email = queryParams.get('email') || localStorage.getItem('email'); // OR however you are storing user email
+  const email = localStorage.getItem('userEmail'); // OR however you are storing user email
 
   
 useEffect(() => {

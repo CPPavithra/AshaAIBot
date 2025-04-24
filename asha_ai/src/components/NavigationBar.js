@@ -12,7 +12,8 @@ const NavigationBar = () => {
   const userEmail = localStorage.getItem('userEmail');
 
   const queryParams = new URLSearchParams(location.search);
-  const email = queryParams.get("email");
+  //const email = queryParams.get("email");
+    const email = localStorage.getItem("userEmail");
 
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
