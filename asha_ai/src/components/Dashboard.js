@@ -45,11 +45,6 @@ const Dashboard = () => {
     return <div className="error-message">{error}</div>;
   }
 
-  if (!user) {
-    return <div className="error-message">Loading...</div>;
-  } 
-
-// Navigate to the chatbot with the query parameter
    return (
     <div className="dashboard-container">
       {/* Profile icon - clicking redirects to profile page */}
