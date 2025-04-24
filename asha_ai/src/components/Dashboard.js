@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; 
+import { useNavigate, useLocation, Link } from "react-router-dom"; 
 import axios from "axios";
-
+import { FaUserCircle } from "react-icons/fa";
+import resumelogo from '../assets/resumelogo.png';
+import career from '../assets/career.png';
+import pwc from '../assets/pwc.png';
+import "./Dashboard.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -39,6 +43,10 @@ const Dashboard = () => {
   // ✅ Handle loading or error
   if (error) {
     return <div className="error-message">{error}</div>;
+  }
+
+  if (!user) {
+    return <div className="error-message">Loading...</div>;
   }
 
    return (
