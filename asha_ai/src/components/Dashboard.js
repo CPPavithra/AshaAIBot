@@ -49,12 +49,14 @@ const Dashboard = () => {
     return <div className="error-message">Loading...</div>;
   }
 
+
+
    return (
     <div className="dashboard-container">
       {/* Profile icon - clicking redirects to profile page */}
       <div 
         className="profile-icon" 
-        onClick={() => navigate(/profile?email=${encodeURIComponent(email)})}
+        onClick={() => navigate(`/profile?email=${encodeURIComponent(email)}`)}
       >
         <FaUserCircle size={40} />
       </div>
