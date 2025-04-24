@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom"; 
 import axios from "axios";
 
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,9 +41,7 @@ const Dashboard = () => {
     return <div className="error-message">{error}</div>;
   }
 
-  if (!user) {
-    return <div className="error-message">Loading...</div>;
-  }   return (
+   return (
     <div className="dashboard-container">
       {/* Profile icon - clicking redirects to profile page */}
       <div 
