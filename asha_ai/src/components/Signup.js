@@ -128,20 +128,21 @@ function Signup() {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="profilePic">Profile Picture</label>
-            <div className="file-upload">
-              <input 
-                type="file" 
-                id="profilePic"
-                accept="image/*"
-                onChange={handleProfilePicChange}
-              />
-              <span className="file-upload-text">
-                {profilePic ? profilePic.name : "Choose a file"}
-              </span>
-            </div>
-          </div>
+          
+<div className="form-group" style={{ display: "none" }}>
+  <label htmlFor="profilePic">Profile Picture</label>
+  <div className="file-upload">
+    <input 
+      type="file" 
+      id="profilePic"
+      accept="image/*"
+      onChange={handleProfilePicChange}
+    />
+    <span className="file-upload-text">
+      {profilePic ? profilePic.name : "Choose a file"}
+    </span>
+  </div>
+</div>
           
           <div className="form-group">
             <label>Gender</label>
