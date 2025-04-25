@@ -217,20 +217,21 @@ function Signup() {
             />
           </div>
           
-          <div className="form-group">
-            <label htmlFor="resume">Resume</label>
-            <div className="file-upload">
-              <input 
-                type="file" 
-                id="resume"
-                accept=".pdf,.doc,.docx"
-                onChange={handleResumeChange}
-              />
-              <span className="file-upload-text">
-                {resume ? resume.name : "Upload your resume"}
-              </span>
-            </div>
-          </div>
+          
+<div className="form-group" style={{ display: "none" }}>
+  <label htmlFor="resume">Resume</label>
+  <div className="file-upload">
+    <input 
+      type="file" 
+      id="resume"
+      accept=".pdf,.doc,.docx"
+      onChange={handleResumeChange}
+    />
+    <span className="file-upload-text">
+      {resume ? resume.name : "Upload your resume"}
+    </span>
+  </div>
+</div>
           
           <div className="form-group">
             <label htmlFor="email">Email</label>
