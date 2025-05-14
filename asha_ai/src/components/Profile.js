@@ -18,7 +18,7 @@ const Profile = () => {
     }
 
     axios
-      .get(`https://ashaaibot-backend.onrender.com/user?email=${encodeURIComponent(email)}`)
+      .get(`https://ashaaibot-server.onrender.com/user?email=${encodeURIComponent(email)}`)
       .then((response) => {
         setUser(response.data);
       })

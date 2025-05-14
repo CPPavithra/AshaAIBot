@@ -14,7 +14,7 @@ function Login() {
     setError('');
 
     try {
-      const res = await fetch('https://ashaaibot-backend.onrender.com/login', {
+      const res = await fetch('https://ashaaibot-server.onrender.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
