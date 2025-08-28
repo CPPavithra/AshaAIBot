@@ -3,7 +3,7 @@
 
 ## 📘 Index
 
-1. [Overview](#overview)
+1. [Overview](#overview) 
 2. [Features](#features)
 3. [Datasets Used](#datasets-used-in-the-asha-ai-chatbot-project)
 4. [Repository Structure](#repository-structure)
@@ -18,7 +18,7 @@
 
 ## 🧠 Overview
 
-Asha AI is an inclusive AI chatbot built to empower women by providing access to job opportunities, mentorship, and personalized career guidance. It uses real-time job APIs, resume parsing, and D&I (Diversity and Inclusion) datasets to offer helpful and relevant insights for users.
+Asha AI (ashabot) is an inclusive AI chatbot built to empower women by providing access to job opportunities, mentorship, and personalized career guidance. It uses real-time job APIs, resume parsing, and D&I (Diversity and Inclusion) datasets to offer helpful and relevant insights for users.
 It has been deployed online at-
 [!]https://asha-ai-bot-blue.vercel.app/
 
